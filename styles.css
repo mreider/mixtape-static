@@ -428,6 +428,31 @@ body {
    CREATE PAGE
    ========================================== */
 
+/* API Limit Page */
+.api-limit-container {
+    text-align: center;
+    max-width: 500px;
+}
+
+.api-limit-title {
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    font-size: 1.8rem;
+    color: var(--neon-pink);
+    text-shadow: var(--glow-pink);
+    margin: 2rem 0 1.5rem;
+}
+
+.api-limit-text {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.api-limit-container .btn {
+    margin-top: 1.5rem;
+}
+
 #create.page {
     align-items: flex-start;
     padding: 2rem;
@@ -806,12 +831,11 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 1rem 2rem;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
     z-index: 2;
-    overflow: hidden;
 }
 
 .player-topbar {
@@ -859,7 +883,6 @@ body {
     align-items: start;
     flex: 1;
     min-height: 0;
-    overflow: hidden;
 }
 
 @media (max-width: 900px) {

@@ -111,16 +111,36 @@ async function findYouTubeVideo(artist, title) {
             { signal: AbortSignal.timeout(8000) }
         );
 
+        const data = await response.json();
+
+        // Check for quota exceeded error
+        if (data.error && (data.error.includes('quota') || data.error.includes('limit'))) {
+            showApiLimitPage();
+            return null;
+        }
+
+        // Check for 403/quota error from YouTube API passthrough
+        if (response.status === 403 || data.error?.code === 403) {
+            showApiLimitPage();
+            return null;
+        }
+
         if (!response.ok) {
             throw new Error('YouTube search failed');
         }
 
-        const data = await response.json();
         return data.videoId || null;
     } catch (e) {
         console.error('YouTube lookup failed:', e);
         return null;
     }
+}
+
+/**
+ * Show the API limit page
+ */
+function showApiLimitPage() {
+    showPage('apiLimit');
 }
 
 function formatDuration(seconds) {
@@ -714,6 +734,12 @@ function setupEventListeners() {
         if (state.player) {
             state.player.pauseVideo();
         }
+        window.location.hash = '';
+        showPage('landing');
+    });
+
+    // API Limit page
+    document.getElementById('apiLimitHome').addEventListener('click', () => {
         window.location.hash = '';
         showPage('landing');
     });
